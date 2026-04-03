@@ -1,0 +1,31 @@
+smart-factory-platform/
+├── package.json                 # Dependencies config
+├── vite.config.js             # Vite bundler config
+├── tailwind.config.js          # TailwindCSS config
+├── postcss.config.js           # PostCSS config
+│
+├── src/
+│   ├── App.jsx                 # Main app with routing & layout
+│   ├── components/
+│   │   ├── Layout.jsx          # 20+ reusable UI components
+│   │   ├── Dashboard.jsx       # KPI cards, charts, quality indicators
+│   │   ├── Inspection.jsx      # QA inspection forms
+│   │   └── Notifications.jsx   # Alerts, toasts, modals
+│   │
+│   ├── pages/
+│   │   ├── Dashboard.jsx       # Real-time KPI dashboard
+│   │   ├── QAInspection.jsx    # QA testing interface
+│   │   ├── CCPMonitoring.jsx   # HACCP compliance monitoring
+│   │   └── Traceability.jsx    # Food batch traceability
+│   │
+│   ├── services/
+│   │   ├── supabaseClient.js   # Database integration
+│   │   ├── api.js              # API calls (20+ functions)
+│   │   ├── aiService.js        # ML prediction engines
+│   │   └── iotSimulator.js     # IoT sensor simulation
+│   │
+│   ├── hooks/
+│   │   └── index.js            # 15+ custom React hooks
+│   │
+│   └── utils/
+│       └── helpers.js          # 30+ utility functions
