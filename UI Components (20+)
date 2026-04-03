@@ -1,5 +1,8 @@
-✓ Supabase PostgreSQL client
-✓ Mock data for development
-✓ 20+ API functions for all operations
-✓ Real-time data subscriptions
-✓ Transactional support
+∙	Button, Input, Select, Badge, Alert
+	∙	Cards, Modals, Spinners
+	∙	Tables, Data Grids
+	∙	Progress Bars, Status Indicators
+	∙	Charts (Line, Bar, Pie, Area)
+	∙	Traceability Chain visualization
+	∙	Anomaly alerts
+	∙	Risk assessment cards
