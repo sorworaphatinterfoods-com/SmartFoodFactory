@@ -1,0 +1,11 @@
+✓ useFetch() - Data fetching with loading/error states
+✓ useForm() - Form state management
+✓ useModal() - Modal dialogs
+✓ useNotification() - Toast notifications
+✓ usePagination() - Data pagination
+✓ useDebounce() - Debounced values
+✓ useRealtimeData() - Live sensor data
+✓ useLocalStorage() - Persistent storage
+✓ useWindowSize() - Responsive design
+✓ useIsMobile() - Mobile detection
+✓ useOnlineStatus() - Network detection
