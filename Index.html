@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConnectHub - ระบบสื่อสารภายในองค์กร</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+```
+    body {
+        background: linear-gradient(to bottom right, #0f172a, #1e293b, #0f172a);
+        color: #e2e8f0;
+        font-family: 'Segoe UI', 'Prompt', 'Sarabun', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    }
+
+    .gradient-text {
+        background: linear-gradient(to right, #06b6d4, #60a5fa, #06b6d4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .department-card {
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .department-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(6, 182, 212, 0.3);
+    }
+
+    .announcement-item {
+        transition: all 0.3s ease;
+        border-left: 4px solid transparent;
+    }
+
+    .announcement-item:hover {
+        border-left-color: #06b6d4;
+        transform: translateX(8px);
+    }
+
+    .stat-card {
+        transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+        border-color: #06b6d4;
+        background: rgba(6, 182, 212, 0.05);
+    }
+
+    .tab-content {
+        display: none;
+        animation: fadeIn 0.5s ease;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .mobile-menu {
+        display: none;
+    }
+
+    .mobile-menu.active {
+        display: flex;
+    }
+
+    @media (max-width: 768px) {
+        .desktop-nav {
+            display: none;
+        }
+    }
+
+    @media (min-width: 769px) {
+        .mobile-menu-toggle {
+            display: none;
+        }
+    }
+</style>
+```
+
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-50 backdrop-blur-md bg-slate-900/80 border-b border-slate-700/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-comments text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold text-white hidden sm:inline">ConnectHub</span>
+                </div>
+
+```
+            <!-- Desktop Navigation -->
+            <div class="desktop-nav flex items-center gap-8">
+                <button onclick="showTab('home')" class="tab-btn transition text-slate-300 hover:text-cyan-400 font-medium" data-tab="home">หน้าแรก</button>
+                <button onclick="showTab('departments')" class="tab-btn transition text-slate-300 hover:text-cyan-400 font-medium" data-tab="departments">แผนก</button>
+                <button onclick="showTab('messages')" class="tab-btn transition text-slate-300 hover:text-cyan-400 font-medium" data-tab="messages">ข้อความ</button>
+                <button onclick="showTab('events')" class="tab-btn transition text-slate-300 hover:text-cyan-400 font-medium" data-tab="events">กิจกรรม</button>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button onclick="toggleMobileMenu()" class="mobile-menu-toggle text-white text-xl">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- User Profile -->
+            <div class="hidden md:flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-full flex items-center justify-center text-white font-bold">
+                    สม
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu flex-col gap-3 pb-4">
+            <button onclick="showTab('home'); toggleMobileMenu()" class="text-left text-slate-300 hover:text-cyan-400 py-2 font-medium">หน้าแรก</button>
+            <button onclick="showTab('departments'); toggleMobileMenu()" class="text-left text-slate-300 hover:text-cyan-400 py-2 font-medium">แผนก</button>
+            <button onclick="showTab('messages'); toggleMobileMenu()" class="text-left text-slate-300 hover:text-cyan-400 py-2 font-medium">ข้อความ</button>
+            <button onclick="showTab('events'); toggleMobileMenu()" class="text-left text-slate-300 hover:text-cyan-400 py-2 font-medium">กิจกรรม</button>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- HOME TAB -->
+    <div id="home" class="tab-content active">
+        <div class="space-y-12">
+            <!-- Hero Section -->
+            <div class="text-center mb-16">
+                <h1 class="text-5xl sm:text-6xl font-bold text-white mb-4 gradient-text">ยินดีต้อนรับสู่ ConnectHub</h1>
+                <p class="text-xl text-slate-300">ศูนย์กลางการสื่อสารขององค์กรของคุณ</p>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="relative max-w-2xl mx-auto mb-12">
+                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                <input type="text" placeholder="ค้นหาแผนก ข้อความ หรือประกาศ..." 
+                       class="w-full bg-slate-800/50 border border-slate-700 rounded-xl pl-12 pr-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 transition">
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="stat-card bg-slate-800/50 border border-slate-700 rounded-xl p-6 backdrop-blur-sm hover:border-cyan-500/50 transition">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 bg-cyan-500/10 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-comment text-cyan-400 text-lg"></i>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 text-sm mb-1">ข้อความทั้งหมด</p>
+                    <p class="text-3xl font-bold text-white">342</p>
+                </div>
+
+                <div class="stat-card bg-slate-800/50 border border-slate-700 rounded-xl p-6 backdrop-blur-sm hover:border-cyan-500/50 transition">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 bg-cyan-500/10 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-bell text-cyan-400 text-lg"></i>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 text-sm mb-1">ประกาศ</p>
+                    <p class="text-3xl font-bold text-white">28</p>
+                </div>
+
+                <div class="stat-card bg-slate-800/50 border border-slate-700 rounded-xl p-6 backdrop-blur-sm hover:border-cyan-500/50 transition">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 bg-cyan-500/10 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-users text-cyan-400 text-lg"></i>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 text-sm mb-1">สมาชิกในทีม</p>
+                    <p class="text-3xl font-bold text-white">156</p>
+                </div>
+
+                <div class="stat-card bg-slate-800/50 border border-slate-700 rounded-xl p-6 backdrop-blur-sm hover:border-cyan-500/50 transition">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="w-12 h-12 bg-cyan-500/10 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-calendar text-cyan-400 text-lg"></i>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 text-sm mb-1">กิจกรรม</p>
+                    <p class="text-3xl font-bold text-white">12</p>
+                </div>
+            </div>
+
+            <!-- Announcements Section -->
+            <div>
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+                        <i class="fas fa-bell text-cyan-400"></i>
+                        ประกาศล่าสุด
+                    </h2>
+                    <a href="#" class="text-cyan-400 hover:text-cyan-300 flex items-center gap-2 text-sm font-medium">
+                        ดูทั้งหมด <i class="fas fa-arrow-right text-sm"></i>
+                    </a>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- Announcement 1 -->
+                    <div class="announcement-item group bg-slate-800/50 border border-slate-700 rounded-xl p-6 hover:border-cyan-500/50 transition cursor-pointer">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="text-xs font-bold px-3 py-1 rounded-full bg-red-500/20 text-red-300">ทรม.</span>
+                                    <span class="text-sm text-slate-400 flex items-center gap-1">
+                                        <i class="fas fa-clock text-xs"></i> วันนี้
+                                    </span>
+                                </div>
+                                <h3 class="text-lg font-semibold text-white group-hover:text-cyan-400 transition mb-2">การประเมินผลประจำไตรมาส 1</h3>
+                                <p class="text-slate-400 text-sm">การประเมินผลประจำปีจะเริ่มในสัปดาห์หน้า โปรดจัดการอบรมกับหัวหน้าของคุณ...</p>
+                            </div>
+                            <div class="ml-4 flex-shrink-0 text-red-400 text-lg">⚡</div>
+                        </div>
+                    </div>
+
+                    <!-- Announcement 2 -->
+                    <div class="announcement-item group bg-slate-800/50 border border-slate-700 rounded-xl p-6 hover:border-cyan-500/50 transition cursor-pointer">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="text-xs font-bold px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300">บัญชี</span>
+                                    <span class="text-sm text-slate-400 flex items-center gap-1">
+                                        <i class="fas fa-clock text-xs"></i> 2 ชั่วโมงที่แล้ว
+                                    </span>
+                                </div>
+                                <h3 class="text-lg font-semibold text-white group-hover:text-cyan-400 transition mb-2">รายงานการเงินรายเดือนเผยแพร่แล้ว</h3>
+                                <p class="text-slate-400 text-sm">สรุปการเงินประจำเดือนมีนาคมพร้อมให้ผู้บริหารแผนกทั้งหมดแล้ว...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Announcement 3 -->
+                    <div class="announcement-item group bg-slate-800/50 border border-slate-700 rounded-xl p-6 hover:border-cyan-500/50 transition cursor-pointer">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="text-xs font-bold px-3 py-1 rounded-full bg-orange-500/20 text-orange-300">ขาย</span>
+                                    <span class="text-sm text-slate-400 flex items-center gap-1">
+                                        <i class="fas fa-clock text-xs"></i> เมื่อวานนี้
+                                    </span>
+                                </div>
+                                <h3 class="text-lg font-semibold text-white group-hover:text-cyan-400 transition mb-2">แคมเปญเปิดตัวสินค้าใหม่</h3>
+                                <p class="text-slate-400 text-sm">ข่าวดีครับ! สินค้าโฉมใหม่ของเราเปิดตัวในเดือนหน้า มีเอกสารทางการตลาดพร้อมแล้ว...</p>
+                            </div>
+                            <div class="ml-4 flex-shrink-0 text-red-400 text-lg">⚡</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DEPARTMENTS TAB -->
+    <div id="departments" class="tab-content">
+        <h1 class="text-4xl font-bold text-white mb-2">แผนก</h1>
+        <p class="text-slate-400 mb-12">เข้าถึงการสื่อสารและทรัพยากรสำหรับแต่ละแผนก</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- HR Department -->
+            <div class="department-card bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl p-8 text-white overflow-hidden relative cursor-pointer">
+                <div class="absolute inset-0 opacity-0 hover:opacity-10 bg-white transition"></div>
+                <div class="absolute -top-8 -right-8 w-32 h-32 bg-white/10 rounded-full hover:scale-150 transition duration-500"></div>
+                <div class="relative z-10">
+                    <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-users text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">ทรัพยากรบุคคล</h3>
+                    <p class="text-white/80 text-sm mb-6">เชื่อมต่อกับทีม HR</p>
+                    <div class="flex items-center gap-2 text-sm font-semibold group-hover:gap-4 transition">
+                        เข้าถึง <i class="fas fa-arrow-right text-sm ml-2"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AC Department -->
+            <div class="department-card bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl p-8 text-white overflow-hidden relative cursor-pointer">
+                <div class="absolute inset-0 opacity-0 hover:opacity-10 bg-white transition"></div>
+                <div class="absolute -top-8 -right-8 w-32 h-32 bg-white/10 rounded-full hover:scale-150 transition duration-500"></div>
+                <div class="relative z-10">
+                    <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-calculator text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">บัญชี</h3>
+                    <p class="text-white/80 text-sm mb-6">เชื่อมต่อกับทีม AC</p>
+                    <div class="flex items-center gap-2 text-sm font-semibold group-hover:gap-4 transition">
+                        เข้าถึง <i class="fas fa-arrow-right text-sm ml-2"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SA Department -->
+            <div class="department-card bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl p-8 text-white overflow-hidden relative cursor-pointer">
+                <div class="absolute inset-0 opacity-0 hover:opacity-10 bg-white transition"></div>
+                <div class="absolute -top-8 -right-8 w-32 h-32 bg-white/10 rounded-full hover:scale-150 transition duration-500"></div>
+                <div class="relative z-10">
+                    <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-chart-line text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">ขาย</h3>
+                    <p class="text-white/80 text-sm mb-6">เชื่อมต่อกับทีม SA</p>
+                    <div class="flex items-center gap-2 text-sm font-semibold group-hover:gap-4 transition">
+                        เข้าถึง <i class="fas fa-arrow-right text-sm ml-2"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PU Department -->
+            <div class="department-card bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl p-8 text-white overflow-hidden relative cursor-pointer">
+                <div class="absolute inset-0 opacity-0 hover:opacity-10 bg-white transition"></div>
+                <div class="absolute -top-8 -right-8 w-32 h-32 bg-white/10 rounded-full hover:scale-150 transition duration-500"></div>
+                <div class="relative z-10">
+                    <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-shopping-cart text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">จัดซื้อ</h3>
+                    <p class="text-white/80 text-sm mb-6">เชื่อมต่อกับทีม PU</p>
+                    <div class="flex items-center gap-2 text-sm font-semibold group-hover:gap-4 transition">
+                        เข้าถึง <i class="fas fa-arrow-right text-sm ml-2"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PD Department -->
+            <div class="department-card bg-gradient-to-br from-yellow-500 to-orange-500 rounded-2xl p-8 text-white overflow-hidden relative cursor-pointer">
+                <div class="absolute inset-0 opacity-0 hover:opacity-10 bg-white transition"></div>
+                <div class="absolute -top-8 -right-8 w-32 h-32 bg-white/10 rounded-full hover:scale-150 transition duration-500"></div>
+                <div class="relative z-10">
+                    <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-industry text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">การผลิต</h3>
+                    <p class="text-white/80 text-sm mb-6">เชื่อมต่อกับทีม PD</p>
+                    <div class="flex items-center gap-2 text-sm font-semibold group-hover:gap-4 transition">
+                        เข้าถึง <i class="fas fa-arrow-right text-sm ml-2"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QA/QC Department -->
+            <div class="department-card bg-gradient-to-br from-indigo-500 to-blue-500 rounded-2xl p-8 text-white overflow-hidden relative cursor-pointer">
+                <div class="absolute inset-0 opacity-0 hover:opacity-10 bg-white transition"></div>
+                <div class="absolute -top-8 -right-8 w-32 h-32 bg-white/10 rounded-full hover:scale-150 transition duration-500"></div>
+                <div class="relative z-10">
+                    <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-check-circle text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">ควบคุมคุณภาพ</h3>
+                    <p class="text-white/80 text-sm mb-6">เชื่อมต่อกับทีม QA/QC</p>
+                    <div class="flex items-center gap-2 text-sm font-semibold group-hover:gap-4 transition">
+                        เข้าถึง <i class="fas fa-arrow-right text-sm ml-2"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WH Department -->
+            <div class="department-card bg-gradient-to-br from-slate-500 to-gray-600 rounded-2xl p-8 text-white overflow-hidden relative cursor-pointer">
+                <div class="absolute inset-0 opacity-0 hover:opacity-10 bg-white transition"></div>
+                <div class="absolute -top-8 -right-8 w-32 h-32 bg-white/10 rounded-full hover:scale-150 transition duration-500"></div>
+                <div class="relative z-10">
+                    <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-warehouse text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">คลังสินค้า</h3>
+                    <p class="text-white/80 text-sm mb-6">เชื่อมต่อกับทีม WH</p>
+                    <div class="flex items-center gap-2 text-sm font-semibold group-hover:gap-4 transition">
+                        เข้าถึง <i class="fas fa-arrow-right text-sm ml-2"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MN Department -->
+            <div class="department-card bg-gradient-to-br from-rose-500 to-pink-500 rounded-2xl p-8 text-white overflow-hidden relative cursor-pointer">
+                <div class="absolute inset-0 opacity-0 hover:opacity-10 bg-white transition"></div>
+                <div class="absolute -top-8 -right-8 w-32 h-32 bg-white/10 rounded-full hover:scale-150 transition duration-500"></div>
+                <div class="relative z-10">
+                    <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-crown text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">บริหาร</h3>
+                    <p class="text-white/80 text-sm mb-6">เชื่อมต่อกับทีม MN</p>
+                    <div class="flex items-center gap-2 text-sm font-semibold group-hover:gap-4 transition">
+                        เข้าถึง <i class="fas fa-arrow-right text-sm ml-2"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MESSAGES TAB -->
+    <div id="messages" class="tab-content">
+        <h1 class="text-4xl font-bold text-white mb-2">ข้อความ</h1>
+        <p class="text-slate-400 mb-12">ข้อความตรงและการสนทนาของทีม</p>
+
+        <div class="max-w-3xl">
+            <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-8 text-center">
+                <i class="fas fa-comment text-6xl text-slate-600 mb-4 block"></i>
+                <h3 class="text-xl font-bold text-white mb-2">ยังไม่มีข้อความ</h3>
+                <p class="text-slate-400">เลือกการสนทนาหรือแผนกเพื่อเริ่มส่งข้อความ</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- EVENTS TAB -->
+    <div id="events" class="tab-content">
+        <h1 class="text-4xl font-bold text-white mb-2">กิจกรรม & ปฏิทิน</h1>
+        <p class="text-slate-400 mb-12">กิจกรรมและวันสำคัญที่จะมาถึง</p>
+
+        <div class="max-w-3xl">
+            <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-8 text-center">
+                <i class="fas fa-calendar text-6xl text-slate-600 mb-4 block"></i>
+                <h3 class="text-xl font-bold text-white mb-2">กิจกรรมจะเพิ่มเร็ว ๆ นี้</h3>
+                <p class="text-slate-400">ติดตามเพื่อรับข้อมูลเกี่ยวกับกิจกรรมองค์กรและวันสำคัญต่างๆ</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="border-t border-slate-700/50 mt-16 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-slate-400">
+        <p>© 2024 ConnectHub. ระบบสื่อสารภายในองค์กร</p>
+    </div>
+</footer>
+
+<script>
+    function showTab(tabName) {
+        // ซ่อนแท็บทั้งหมด
+        const tabs = document.querySelectorAll('.tab-content');
+        tabs.forEach(tab => tab.classList.remove('active'));
+
+        // แสดงแท็บที่เลือก
+        document.getElementById(tabName).classList.add('active');
+
+        // อัปเดตปุ่มที่ใช้งานอยู่
+        const buttons = document.querySelectorAll('.tab-btn');
+        buttons.forEach(btn => {
+            if (btn.getAttribute('data-tab') === tabName) {
+                btn.classList.add('text-cyan-400');
+                btn.classList.remove('text-slate-300');
+            } else {
+                btn.classList.remove('text-cyan-400');
+                btn.classList.add('text-slate-300');
+            }
+        });
+    }
+
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        menu.classList.toggle('active');
+    }
+
+    // เริ่มต้น
+    showTab('home');
+</script>
+```
+
+</body>
+</html>
